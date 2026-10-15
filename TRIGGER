@@ -1,0 +1,44 @@
+```sql
+-- 1. Create database
+CREATE DATABASE College;
+
+-- 2. Select database
+USE College;
+
+-- 3. Create Student table
+CREATE TABLE Student (
+    RollNo INT PRIMARY KEY,
+    Name VARCHAR(50),
+    Marks INT
+);
+
+-- 4. Create Audit table
+CREATE TABLE Audit (
+    Message VARCHAR(100)
+);
+
+-- 5. Create trigger
+DELIMITER //
+
+CREATE TRIGGER after_student_insert
+AFTER INSERT ON Student
+FOR EACH ROW
+BEGIN
+    INSERT INTO Audit
+    VALUES (
+        CONCAT('New student added: ', NEW.Name)
+    );
+END //
+
+DELIMITER ;
+
+-- 6. Insert a record
+INSERT INTO Student
+VALUES (1, 'Nisha', 90);
+
+-- 7. Display Student table
+SELECT * FROM Student;
+
+-- 8. Display Audit table
+SELECT * FROM Audit;
+```
